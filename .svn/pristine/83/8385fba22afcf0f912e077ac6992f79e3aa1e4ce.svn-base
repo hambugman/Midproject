@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="gallery">
+
+	<typeAlias alias="galVo" type="vlog.vo.GalleryVo"/>
+
+
+	<insert id="galleryInsert" parameterClass="galVo">
+    	<selectKey keyProperty="gallery_no" resultClass="int" type="pre">
+    		select ORPGAL_SEQ.NEXTVAL from dual
+    	</selectKey>
+		insert into gallery
+   			 values( #gallery_no#, #orp_no#, 
+    				#gallery_title#, sysdate, #gallery_cont#)
+	</insert>
+
+	<update id="galleryUpdate" parameterClass="galVo">
+		update GALLERY set orp_no=#orp_no#, 
+						gallery_title=#gallery_title#,
+					 gallery_cont=#gallery_cont#
+					where gallery_no=#gallery_no#
+	</update>
+	
+	<select id="allGallery" resultClass="galVo" parameterClass="String">
+		select * from gallery where orp_no=#orp_no# order by 1 desc
+	</select>
+	
+	<select id="detailGallery" resultClass="galVo" parameterClass="int">
+		select * from gallery where gallery_no=#f#
+	</select>
+	
+	<delete id="galleryDelete" parameterClass="int">
+		delete from gallery where gallery_no=#f#
+	</delete>
+	
+
+
+</sqlMap>

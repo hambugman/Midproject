@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="volApp">
+
+	<typeAlias alias="volunVo" type="vlog.vo.volunVo"/>
+
+    <insert id="volunInsert" parameterClass="volunVo" >
+    	<selectKey keyProperty="volun_no" resultClass="int" type="pre">
+    		select VABOARD_SEQ.nextval from dual
+    	</selectKey>
+    
+         insert into VOLUNTEER
+         	values(#volun_no#, #orp_no#, #gen_id#, #volun_date#, sysdate)
+    </insert>
+    
+    <select id="commonList" parameterClass="String" resultClass="volunVo">
+     select A.volun_no, A.orp_no, A.gen_id, A.volun_date, A.volun_push, B.orp_name 
+       from VOLUNTEER A, orphanage B 
+      where A.orp_no=B.orp_no and A.gen_id=#DD#
+      order by volun_date 
+    </select>
+    
+    <select id="orpList" parameterClass="String" resultClass="volunVo">
+       select A.volun_no, A.orp_no, A.gen_id, A.volun_date, A.volun_push, B.gen_name
+         from VOLUNTEER A, COMMON B 
+        where A.gen_id=B.gen_id and A.orp_no=#a#
+        order by volun_date 
+    </select>
+     
+</sqlMap>
+
+
+
+
+

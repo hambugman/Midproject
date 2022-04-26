@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="fileboard">
+
+	<select id="selectfile" resultClass="FileVO" parameterClass="map">
+		select * from addfile 
+		 where board_no = #board_no#
+		   and board_div = #board_div#
+	</select>
+	
+	<select id="divSelect" resultClass="FileVO" parameterClass="String">
+		select * from addfile where board_div = #board_div#
+	</select>
+	
+	<insert id="insertfile" parameterClass="FileVO">
+
+		<selectKey resultClass="int" keyProperty="fileno" type="pre">
+            select fileadd_seq.nextval from dual 
+         </selectKey>
+	
+		insert into addfile(fileno, filepath, board_no, board_div)
+			values(#fileno#, #filepath#, #board_no#, #board_div#)
+			
+	</insert>
+</sqlMap>

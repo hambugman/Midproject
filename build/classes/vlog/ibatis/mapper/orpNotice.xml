@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="orpNotice">
+
+	<typeAlias alias="onVo" type="vlog.vo.orpNoVo"/>
+	
+	<insert id="oNoticeInsert" parameterClass="onVo">
+		<selectKey keyProperty="onotice_no" resultClass="int" type="pre">
+			select NOTICE_SEQ.NEXTVAL from dual
+		</selectKey>
+		
+		insert into orpnotice
+    values(#onotice_no#, #orp_no#, #onotice_title#, sysdate, #onotice_cont#)
+	</insert>
+	
+	<update id="oNoticeUpdate" parameterClass="onVo">
+		update orpnotice set orp_no=#orp_no#,
+							 onotice_title=#onotice_title#,
+							 onotice_cont=#onotice_cont#
+		where onotice_no=#onotice_no#
+	</update>
+	
+	<select id="allONotice" resultClass="onVo" parameterClass="String">
+		select * from orpnotice where orp_no=#f# order by 1 desc
+	</select>
+	
+	<select id="detailONoice" resultClass="onVo" parameterClass="int">
+		select * from orpnotice where onotice_no=#onotice_no#
+	</select>
+
+	<delete id="oNoticeDelete" parameterClass="int">
+		delete from orpnotice where onotice_no=#onotice_no#
+	</delete>
+</sqlMap>

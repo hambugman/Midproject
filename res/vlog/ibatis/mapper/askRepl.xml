@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="askRepl">
+
+	<typeAlias alias="arVo" type="vlog.vo.arVo"/>
+	
+	<insert id="arInsert" parameterClass="arVo">
+		<selectKey keyProperty="ra_no" resultClass="int" type="pre">
+			select ORPQREPLY_SEQ.NEXTVAL from dual
+		</selectKey>
+		
+		insert into REPLYASK
+    		values(#ra_no#, #ask_no#, #orp_no#, sysdate, #ra_cont#)
+	</insert>
+	
+	<update id="arUpdate" parameterClass="arVo">
+		update REPLYASK set ask_no=#ask_no#,
+					   orp_no=#orp_no#,
+					   ra_cont=#ra_cont#
+				 where ra_no=#ra_no#
+	</update>
+	
+	<delete id="arDelete" parameterClass="int">
+		delete from REPLYASK where ra_no=#ra_no#
+	</delete>
+	
+	<select id="arList" resultClass="arVo" parameterClass="int">
+		select * from REPLYASK where ask_no=#ask_no#
+	</select>
+
+</sqlMap>

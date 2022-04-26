@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="comboard">
+<!-- 	서브스트링으로 두 글자 자르기 -->
+	<select id="selectLocationAll" resultClass="ComVO" parameterClass="String">
+		select * from community where STD_LOCATION like '%'||#asd#||'%' order by 1 desc
+	</select>
+	
+	<select id="selectBestAll" resultClass="ComVO">
+	select * from community where COMMU_HIT > 99
+	</select>
+	
+	<select id="detailComBoard" resultClass="ComVO" parameterClass="int">
+	select * from community where COMMU_NO = #num#
+	</select>
+	
+	<insert id="insertCom" parameterClass="ComVO">
+		insert into community values
+		(cboard_seq.nextVal, #std_id#,#commu_title#, sysdate, #commu_cont#, #std_location#, 0) 
+		
+		<selectKey resultClass="int" keyProperty="commu_no" type="post">
+            select max(commu_no) from community
+         </selectKey> 
+	</insert>
+	
+	 <select id="totalCount" resultClass="int">
+      select count(*)  from community
+     </select>
+     
+       <update id="updateHit" parameterClass="int">
+      update community  set commu_hit = commu_hit + 1  where commu_no= #data#
+   </update>
+   
+   <delete id="deleteBoard" parameterClass="int">
+       delete community  where  commu_no = #commu_no#
+   </delete>
+	
+	
+<!-- 	학생 -->
+
+	<insert id="insertStd" parameterClass="StdVO">
+		insert into student(std_id, std_location, std_pass, std_name, std_tel, std_bir, std_mail)
+			values(#std_id#, #std_location#, #std_pass#, #std_name#, #std_tel#, #std_bir#, #std_mail#)
+			
+			<selectKey resultClass="string" keyProperty="std_id">
+            select std_id from student where std_ID = #std_id#
+         </selectKey> 
+	</insert>
+
+	<select id="checkId" resultClass="string" parameterClass="string">
+       select std_id from student  where std_id=#data#
+    </select>
+
+	<select id="loginStd" resultClass="StdVO" parameterClass="StdVO">
+		select * from student where std_id = #std_id# and std_pass=#std_pass#
+	</select>
+
+
+<!-- 일반회원 -->
+	<insert id="insertCommon" parameterClass="CommonVO">
+		insert into common(gen_id, gen_pass, gen_tel, gen_addr, gen_name, gen_bir, gen_mail, gen_fcnt, gen_ftotal, type)
+			values(#gen_id#, #gen_pass#, #gen_tel#, #gen_addr#, #gen_name#, #gen_bir#, #gen_mail#, 0, 0, 1)
+			
+			<selectKey resultClass="string" keyProperty="gen_id">
+            select gen_id from common where gen_id = #gen_id# 
+         </selectKey> 
+	</insert>
+	
+		<select id="checkCommonId" resultClass="string" parameterClass="string">
+       select gen_id from common  where gen_id=#gen_id#
+    </select>
+
+	<select id="loginCommon" resultClass="CommonVO" parameterClass="CommonVO">
+		select * from common where gen_id = #gen_id# and gen_pass=#gen_pass#
+	</select>
+	
+	
+<!-- 관리자회원 -->
+<!-- 	<insert id="insertOrp" parameterClass="orpVo"> -->
+<!-- 		insert into common(gen_id, gen_pass, gen_tel, gen_addr, gen_name, gen_bir, gen_mail, gen_fcnt, gen_ftotal, type) -->
+<!-- 			values(#gen_id#, #gen_pass#, #gen_tel#, #gen_addr#, #gen_name#, #gen_bir#, #gen_mail#, 0, 0, 1) -->
+			
+<!-- 			<selectKey resultClass="string" keyProperty="gen_id"> -->
+<!--             select gen_id from common where gen_id = #gen_id# -->
+<!--          </selectKey>  -->
+<!-- 	</insert> -->
+	
+<!-- 		<select id="checkOrpId" resultClass="string" parameterClass="string"> -->
+<!--        select gen_id from common  where gen_id=#gen_id# -->
+<!--     </select> -->
+
+	<select id="loginOrp" resultClass="orpVo" parameterClass="orpVo">
+		select * from orphanage where orp_no = #orp_no# and orp_pass=#orp_pass#
+	</select>
+
+
+
+
+
+
+
+</sqlMap>

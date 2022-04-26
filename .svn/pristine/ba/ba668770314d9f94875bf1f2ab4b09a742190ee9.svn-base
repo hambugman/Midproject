@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="comreply">
+
+    <insert id="insertComReply" parameterClass="ComReplyVO" >
+        insert into replycom
+            values (
+               creply_seq.nextval,
+               #commu_no#,
+               #std_id#,
+               sysdate,
+               #rc_cont#
+            )
+         
+         <selectKey keyProperty="rc_no" resultClass="int">
+           select creply_seq.currval from dual
+         </selectKey>   
+    </insert>
+    
+    
+    <select id="listComReply" resultClass="ComReplyVO" parameterClass="int">
+      select * from replycom where commu_no = #data# order by 1 desc
+    </select>
+    
+    <update id="updateComReply" parameterClass="ComReplyVO" >
+       update  replycom  set rc_cont = #rc_cont# where  rc_no = #rc_no#
+    </update>
+    
+    <delete id="deleteComReply" parameterClass="int">
+       delete replycom  where rc_no = #rc_no#
+    </delete>
+</sqlMap>
+
+
+
+
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="orphanage">
+
+	<typeAlias alias="orpVo" type="vlog.vo.OrpVo"/>
+
+	<select id="orpAll" resultClass="orpVo">
+		select * from orphanage
+	</select>
+	
+	<select id="orpDetail" resultClass="orpVo" parameterClass="String">
+		select * from orphanage where orp_no=#k#
+	</select>
+
+</sqlMap>

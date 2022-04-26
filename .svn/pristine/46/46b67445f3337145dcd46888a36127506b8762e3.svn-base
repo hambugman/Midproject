@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ask">
+
+	<typeAlias alias="askVo" type="vlog.vo.askVo"/>
+	
+	<insert id="askInsert" parameterClass="askVo">
+		<selectKey keyProperty="ask_no" resultClass="int" type="pre">
+			select ORPQUES_SEQ.NEXTVAL from dual
+		</selectKey>
+		
+		insert into ask
+    		values(#ask_no#, #gen_id#, #ask_title#, #ask_cont#, sysdate, #orp_no#)
+	</insert>
+	
+	<update id="askUpdate" parameterClass="askVo">
+		update ask set gen_id=#gen_id#,
+					   ask_title=#ask_title#,
+					   ask_cont=#ask_cont#,
+			   		   orp_no=#orp_no#
+				 where ask_no=#ask_no#
+	</update>
+	
+	<select id="allAsk" resultClass="askVo" parameterClass="String">
+		select * from ask where orp_no=#f# order by 1 desc
+	</select>
+	
+	<select id="detailAsk" resultClass="askVo" parameterClass="int">
+		select * from ask where ask_no=#ask_no#
+	</select>
+
+</sqlMap>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="shareboard">
+
+	
+	<insert id="insertnanum" parameterClass="shareVO">
+
+		<selectKey resultClass="int" keyProperty="share_no" type="pre">
+            select nboard_seq.nextval from dual 
+        </selectKey>
+	
+		insert into nanum(share_no, share_title, share_date, share_cont, gen_id, share_lucky)
+			values(#share_no#, #share_title#, sysdate, #share_cont#, #gen_id#, null)
+			
+	</insert>
+	
+	<select id="selectAll" resultClass="shareVO">
+		select * from nanum order by 1 desc
+	</select>
+	
+		
+</sqlMap>
+
+
+	

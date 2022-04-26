@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="nanumapply">
+
+	<insert id="insertapply" parameterClass="applyVO">
+
+		insert into sharejoin(share_no, std_id, join_time)
+			values(#share_no#, #std_id#, sysdate)
+			
+	</insert>
+	
+	<select id="selectapply" parameterClass="String" resultClass="applyVO">
+	select * from sharejoin
+    where std_id=#std_id#	
+	</select>
+
+</sqlMap>
+

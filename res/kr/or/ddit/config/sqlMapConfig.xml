@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+	
+	
+<sqlMapConfig>
+	<!-- DB와 연결하는 정보를 properties파일에 설정해 놓고 이 properties파일의 내용을 읽어올 수 있도록 설정한다. -->
+	<properties resource="kr/or/ddit/config/dbinfo.properties"/>
+
+	<!-- SQL문이 저장된 xml문서에서 실행할 쿼리문을 찾을 때 
+	          이 xml문서의 네임스페이스와 SQL문이 작성된 태그의 id속성값을 연결해서 찾도록 설정한다. -->
+	<settings useStatementNamespaces="true"/>
+	
+	<!-- 	쿼리문에 사용할 VO객체는 패키지 이름을 포함한 전체 이름을 사용해야하는데
+	 그 경우 문장이 너무 길어질 수 있기 때문에 전체 이름을 대신할 alias를 설정할 수 있다.
+	 
+	 형식) <typeAlias alias ="alias명" type="클래스의 풀네임"/>
+	  -->
+<!-- 	 <typeAlias alias="lprodVo" type="kr.or.ddit.vo.LprodVO"/> -->
+
+	<typeAlias alias="fundVO" type="vlog.vo.FundVO"/>
+	<typeAlias alias="foVO" type="vlog.vo.FoVO"/>
+	<typeAlias alias="fundDetailVO" type="vlog.vo.FundDetailVO"/>
+	<typeAlias alias="ComVO" type="vlog.vo.CommunityVO"/>
+	<typeAlias alias="StdVO" type="vlog.vo.StudentVO"/>
+	<typeAlias alias="shareVO" type="vlog.vo.ShareVO"/>
+	<typeAlias alias="fileVO" type="vlog.vo.FileVO"/>
+	<typeAlias alias="galVo" type="vlog.vo.GalleryVo"/>
+	<typeAlias alias="CommonVO" type="vlog.vo.CommonVO"/>
+	<typeAlias alias="ComReplyVO" type="vlog.vo.ComReplyVO"/>
+	<typeAlias alias="orpVo" type="vlog.vo.OrpVo"/>
+	<typeAlias alias="vboardVO" type="vlog.vo.VolunteerBoardVO"/>
+	<typeAlias alias="vareplyVO" type="vlog.vo.VaReplyVO"/>
+	<typeAlias alias="applyVO" type="vlog.vo.ApplyVO"/>
+	<typeAlias alias="onVo" type="vlog.vo.orpNoVo"/>
+	<typeAlias alias="askVo" type="vlog.vo.askVo"/>
+	<typeAlias alias="AboardVO" type="vlog.vo.AboardVO"/>
+	<typeAlias alias="jjimVo" type="vlog.vo.jjimVo"/>
+	<typeAlias alias="arVo" type="vlog.vo.arVo"/>
+	<typeAlias alias="SharejoinVO" type="vlog.vo.SharejoinVO"/>
+	<typeAlias alias="volunVo" type="vlog.vo.volunVo"/>
+	
+	<!-- 	 DB와의 연결을 처리하는 부분 -->
+	<transactionManager type="JDBC">
+		<dataSource type="SIMPLE">
+			<property name="JDBC.Driver" value="${driver}"/>
+			<property name="JDBC.ConnectionURL" value="${url}"/>
+			<property name="JDBC.Username" value="${user}"/>
+			<property name="JDBC.Password" value="${pass}"/>
+		</dataSource>
+	</transactionManager>
+
+<!-- 	실행할 SQL문 등록하기 -->
+<!-- 	실행할 SQL문은 xml문서로 따로 만든 후 그 xml문서를 아래와 같이 등록하면 된다.
+		
+		형식)<sqlMap resource="경로명/파일명.xml"/>
+ -->
+<!--  	<sqlMap resource="vlog/ibatis/mapper/lprodTest.xml"/> -->
+<!-- 	<sqlMap resource="vlog/ibatis/mapper/fund.xml"/> -->
+	<sqlMap resource="vlog/ibatis/mapper/comboard.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/shareboard.xml"/> 
+ 	<sqlMap resource="vlog/ibatis/mapper/fileboard.xml"/> 
+ 	<sqlMap resource="vlog/ibatis/mapper/gallery.xml"/> 
+ 	<sqlMap resource="vlog/ibatis/mapper/fund.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/comreply.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/orphanage.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/volunteerboard.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/vreply.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/nanumapply.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/orpNotice.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/ask.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/aboard.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/jjim.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/askRepl.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/sharejoin.xml"/>
+
+ 	<sqlMap resource="vlog/ibatis/mapper/volunApply.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/commonselect.xml"/>
+ 	<sqlMap resource="vlog/ibatis/mapper/studentselect.xml"/>
+
+
+</sqlMapConfig>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="aboard">
+
+<select id="selectByPage" resultClass="vboardVO" parameterClass="map">
+   <![CDATA[
+     select A.* from (
+	    select rownum as rnum, B.*  from (
+	         select * from volunteer
+	         order by volun_no desc) B
+	     where rownum <= #end#) A
+     where A.rnum >= #start#
+     ]]>
+   </select>
+   
+   <select id="totalCount" resultClass="int">
+      select count(*)  from volunteer
+   </select>
+   
+   <delete id="deleteBoard" parameterClass="int">
+       delete volunteer  where  volun_no = #volun_no#
+   </delete>
+   
+   <insert id="insertBoard" parameterClass="aboardVO">
+      insert into volunteer 
+      values(
+         vaboard_seq.nextVal, #orp_no#, #gen_id#, #volun_title#, #volun_date#, sysdate
+      )
+      
+      <selectKey  keyProperty="volun_no" resultClass="int">
+        select  vaboard_seq.currVal   from dual
+      </selectKey>
+      
+   </insert>
+   
+   
+   <update id="updateBoard" parameterClass="aboardVO">
+       update  volunteer  set
+              volun_title = #volun_title# , 
+              gen_id= #gen_id#,
+          where volun_no= #volun_no#
+   </update>
+
+
+
+</sqlMap>

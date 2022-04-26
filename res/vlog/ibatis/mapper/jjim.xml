@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="jjim">
+
+	<typeAlias alias="jjimVo" type="vlog.vo.jjimVo"/>
+
+	<insert id="jjimInsert" parameterClass="jjimVo">
+		insert into LIKEORP
+			values(#gen_id#, #orp_no#)
+	</insert>
+	
+	
+	<select id="jjimAll" parameterClass="String" resultClass="jjimVo">
+		select A.gen_id, A.orp_no, B.orp_name 
+		  from likeorp A, orphanage B 
+		 where A.ORP_NO=B.ORP_NO
+		   and A.gen_id=#k#
+	</select> 
+	
+	<select id="jjimOrp" parameterClass="map" resultClass="String">
+		select orp_no from likeorp where gen_id=#gen_id# and orp_no=#orp_no#
+	</select>
+	
+	<delete id="jjimDelete" parameterClass="String">
+		delete from likeorp where orp_no = #k#
+	</delete>
+
+</sqlMap>

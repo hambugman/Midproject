@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="fund">
+
+
+	<select id="getallFund" resultClass="fundVO">	
+	select * from funding 
+	</select>
+	
+    <select id="detailFundPage" resultClass="fundVO" parameterClass="int">
+    select * 
+      from funding 
+     where fun_no=#fun_no#
+    </select>
+
+	<select id="detailOlimpage" resultClass="foVO" parameterClass="int">
+	select * 
+      from fundingoffer 
+     where fo_no=#fo_no#
+	</select>
+
+	<select id="getOlimlist" resultClass="foVO" parameterClass="int">
+	select * from fundingoffer
+<!--  	    select a.*,  -->
+<!--                b.std_name, -->
+<!--                b.std_bir -->
+<!--           from fundingoffer a,student b -->
+<!--          where a.std_id=b.std_id -->
+<!--            and a.fo_orpname like '%'"#orpname#"'%'; -->
+	</select>
+
+
+	<insert id="fundInsert"	parameterClass="fundVO">
+		<selectKey keyProperty="fun_no" resultClass="int" type="pre">
+			select fboard_seq.nextval from dual
+		</selectKey>
+	insert into funding(fun_no,orp_no,fun_name,fun_goal,fun_due,fun_date,fun_cont) 
+	values(#fun_no#,#orp_no#,#fun_name#,#fun_goal#,#fun_due#,sysdate,#fun_cont#)
+	</insert>
+	
+	
+	
+	
+	<delete id="fundDelete" parameterClass="int">
+	delete from funding where fun_no= #fun_no#
+	</delete>
+	
+	
+	
+
+	<insert id="fundOlim" parameterClass="foVO">
+      insert into fundingoffer values(fundoffer_seq.nextval,#std_id#,#fo_title#,#fo_rprod#,#fo_cont#,sysdate,'no')
+      <selectKey  keyProperty="fo_no" resultClass="int">
+        select max(fo_no) from fundingoffer
+      </selectKey>
+    </insert>
+
+    
+    
+    
+  	<insert id="fundPay" parameterClass="fundDetailVO">
+  	insert into FUNDINGDETAIL values (#fun_no#,#gen_id#,#fdetail_money#)
+  	<selectKey keyProperty="fun_no" resultClass="int">
+			select fun_no from dual
+	</selectKey>
+  	</insert>
+  
+	<select id="allfundPeople">
+	</select>
+	
+	<select id="allfundMoney">
+	</select>
+	
+	<select id="funddetail">
+	
+	</select>
+	
+	
+
+</sqlMap>
